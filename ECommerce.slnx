@@ -1,0 +1,14 @@
+<Solution>
+  <Folder Name="/Core/">
+    <Project Path="Core/ECommerce.Contract/ECommerce.Contract.csproj" Id="87f53dff-958a-453c-8962-5ef2c0fd4fcd" />
+    <Project Path="Core/ECommerce.Data/ECommerce.Data.csproj" />
+    <Project Path="Core/ECommerce.Ground/ECommerce.Ground.csproj" Id="d7bc017e-ce79-4a52-8171-45e12606929e" />
+    <Project Path="Core/ECommerce.Service/ECommerce.Service.csproj" Id="7e1464d4-5743-4ed6-aa39-0d9f6e4412a1" />
+  </Folder>
+  <Folder Name="/Infrastructure/">
+    <Project Path="Infrastructure/ECommerce.Presistance/ECommerce.Presistance.csproj" Id="63c1e3c5-1a63-4f7a-82fa-770a365cc364" />
+  </Folder>
+  <Folder Name="/Presentation/">
+    <Project Path="Presentation/ECommerce.Api/ECommerce.Api.csproj" Id="5b5664fd-5bf8-41f4-98d7-aa60e19ab0aa" />
+  </Folder>
+</Solution>
