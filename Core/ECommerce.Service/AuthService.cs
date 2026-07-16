@@ -3,7 +3,6 @@ using ECommerce.Contract.Mappings;
 using ECommerce.Contract.Services;
 using ECommerce.Data;
 using ECommerce.Data.DTO;
-using ECommerce.Data.Entities;
 using ECommerce.Ground;
 
 namespace ECommerce.Service
