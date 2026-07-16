@@ -1,4 +1,4 @@
-﻿using ECommerce.Contract;
+using ECommerce.Contract;
 using ECommerce.Contract.Mappings;
 using ECommerce.Contract.Services;
 using ECommerce.Data;
@@ -28,6 +28,7 @@ namespace ECommerce.Service
                 return new Response<SuccessDTO>
                 {
                     IsValid = false,
+                    Errors = new List<string> { Localizer.GetString("InvalidRefreshToken") }
                 };
             }
             user.RefreshToken = null;
@@ -35,7 +36,7 @@ namespace ECommerce.Service
             return new Response<SuccessDTO>
             {
                 IsValid = true,
-                Model = new SuccessDTO { IsSuccess = false }
+                Model = new SuccessDTO { IsSuccess = true }
             };
         }
         public async Task<Response<AuthResponseDTO>> Register(RegisterDTO model)
@@ -65,6 +66,15 @@ namespace ECommerce.Service
         {
             var user = await _unitOfWork.UserRepository.GetUserByEmail(model.Email);
 
+            if (user == null)
+            {
+                return new Response<AuthResponseDTO>
+                {
+                    IsValid = false,
+                    Errors = new List<string> { Localizer.GetString("InvalidCredentials") }
+                };
+            }
+
             var hashedPassword = _passwordHasher.Verify(model.Password,user.PasswordHash);
             if (hashedPassword)
             {
@@ -74,6 +84,7 @@ namespace ECommerce.Service
                     return new Response<AuthResponseDTO>
                     {
                         IsValid = false,
+                        Errors = new List<string> { Localizer.GetString("InvalidCredentials") }
                     };
                 }
                 var accessToken = _jwtToken.GenerateAccessToken(user, roles);
@@ -97,6 +108,7 @@ namespace ECommerce.Service
             return new Response<AuthResponseDTO>
             {
                 IsValid = false,
+                Errors = new List<string> { Localizer.GetString("InvalidCredentials") }
             };
 
         }
@@ -104,11 +116,12 @@ namespace ECommerce.Service
         public async Task<Response<UserTokensDTO>> RefreshToken(UserTokensDTO model)
         {
             var userId = _jwtToken.GetUserIdFromExpiredToken(model.AccessToken);
-            if (!string.IsNullOrEmpty(userId))
+            if (string.IsNullOrEmpty(userId))
             {
                 return new Response<UserTokensDTO>
                 {
                     IsValid = false,
+                    Errors = new List<string> { Localizer.GetString("InvalidToken") }
                 };
             }
 
@@ -118,6 +131,7 @@ namespace ECommerce.Service
                 return new Response<UserTokensDTO>
                 {
                     IsValid = false,
+                    Errors = new List<string> { Localizer.GetString("TokenExpiredOrInvalid") }
                 };
             }
             var accessToken = _jwtToken.GenerateAccessToken(user, user.UserRoles.Select(a => a.Role.Name).ToList());
