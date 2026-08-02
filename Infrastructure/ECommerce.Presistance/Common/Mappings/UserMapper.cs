@@ -2,9 +2,6 @@
 using ECommerce.Contract.Mappings;
 using ECommerce.Data.DTO;
 using ECommerce.Data.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ECommerce.Presistance.Common.Mappings
 {

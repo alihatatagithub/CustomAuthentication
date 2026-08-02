@@ -46,7 +46,7 @@ namespace ECommerce.Api.Controllers
             {
                 RoleName = a.ToString(),
                 RoleId = a
-            }).ToList()
+            }).ToList();
             return Ok(result);
         }
         [HttpPost("logout")]
