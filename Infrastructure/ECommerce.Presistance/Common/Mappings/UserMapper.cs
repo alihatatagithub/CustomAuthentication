@@ -16,7 +16,7 @@ namespace ECommerce.Presistance.Common.Mappings
 
         public User ToEntity(RegisterDTO dto)
         {
-            return _mapper.Map<User>(dto);
+            return _mapper.Map<User>(dto)
         }
 
         //public TDestination Map<TDestination, TSource>(TSource source)
