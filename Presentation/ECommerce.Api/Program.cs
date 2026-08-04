@@ -1,6 +1,7 @@
-using ECommerce.Presistance.DependencyResolution;
 using ECommerce.Ground;
+using ECommerce.Presistance.DependencyResolution;
 using ECommerce.Service.DependencyResolution;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,7 +35,9 @@ builder.Services.AddOpenApi();
 builder.Services.AddPostgresDbContext();
 builder.Services.AddCustomAuthentication();
 builder.Services.AddInfrastructure();
+builder.AddSerilog();
 builder.Services.AddCoreService();
+
 var app = builder.Build();
 
 var supportedCultures = new[] { "en", "ar" };
@@ -58,6 +61,7 @@ app.UseHttpsRedirection();
  app.UseCors("AllowAngular"); // Commented out to trigger CORS error for testing/demonstration
 
 app.UseAuthorization();
+app.UseSerilogRequestLogging();
 
 app.MapControllers();
 

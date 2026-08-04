@@ -5,9 +5,11 @@ using ECommerce.Ground;
 using ECommerce.Presistance.Common.Mappings;
 using ECommerce.Presistance.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
 using System.Text;
 
 namespace ECommerce.Presistance.DependencyResolution
@@ -42,6 +44,13 @@ namespace ECommerce.Presistance.DependencyResolution
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddAutoMapper(cfg => { }, typeof(MappingProfile).Assembly);
             services.AddScoped<IUserMapper, UserMapper>();
+        }
+        public static void AddSerilog(this WebApplicationBuilder builder)
+        {
+            builder.Host.UseSerilog((context, configuration) =>
+            {
+                configuration.ReadFrom.Configuration(context.Configuration);
+            });
         }
     }
 }
