@@ -15,6 +15,10 @@ namespace ECommerce.Presistance
         public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<UserRole> UserRoles { get; set; }
         public DbSet<RefreshToken> RefreshTokens { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Brand> Brands { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductUploadedFile> ProductUploadedFiles { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             // apply entity type configurations from this assembly

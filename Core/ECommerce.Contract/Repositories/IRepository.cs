@@ -11,6 +11,7 @@ namespace ECommerce.Contract.Repositories
         Task Create(T t);
         Task<List<T>> Find(System.Linq.Expressions.Expression<Func<T, bool>> predicate);
         Task<T> FindOne(System.Linq.Expressions.Expression<Func<T, bool>> predicate);
+        Task<List<T>> GetAllAsync();
         void Remove(T t);
         void Remove(List<T> t);
         void Update(List<T> t);
