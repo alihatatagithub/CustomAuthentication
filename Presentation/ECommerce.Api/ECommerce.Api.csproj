@@ -4,6 +4,10 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+		  <!-- Suppress known warnings at solution level -->
+		  <NoWarn>$(NoWarn);CS1573;NU1901;NU1902;NU1903;NU1904</NoWarn>
+		  <MSBuildWarningsAsMessages>CS1573;NU1901;NU1902;NU1903;NU1904</MSBuildWarningsAsMessages>
+		  <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
   </PropertyGroup>
 
   <ItemGroup>

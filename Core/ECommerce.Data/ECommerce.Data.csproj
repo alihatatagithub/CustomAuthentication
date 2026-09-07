@@ -6,8 +6,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
+	</ItemGroup>
   <ItemGroup>
-    <Folder Include="CustomEntities\" />
+    <Compile Remove="CustomEntities\**" />
+    <EmbeddedResource Remove="CustomEntities\**" />
+    <None Remove="CustomEntities\**" />
   </ItemGroup>
 
   <ItemGroup>

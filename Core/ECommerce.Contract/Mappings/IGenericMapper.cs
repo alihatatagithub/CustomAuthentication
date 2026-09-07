@@ -6,8 +6,8 @@ using System.Text;
 
 namespace ECommerce.Contract.Mappings
 {
-    public interface IUserMapper
+    public interface IGenericMapper
     {
-        User ToEntity(RegisterDTO dto);
+        TDestination Map<TDestination, TSource>(TSource source);
     }
 }

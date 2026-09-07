@@ -15,6 +15,14 @@ namespace ECommerce.Api.Controllers.Base
             }
             return GetErrorResult(result);
         }
+        protected IActionResult GetApiResponse<TResult>(ResponseList<TResult> result) where TResult : class
+        {
+            if (result.IsValid)
+            {
+                return Ok(result.Model);
+            }
+            return GetErrorResult(result);
+        }
         protected IActionResult GetApiResponse<TResult>(ResponseList<TResult> result, int page, int pageSize) where TResult : class
         {
             if (result.IsValid)

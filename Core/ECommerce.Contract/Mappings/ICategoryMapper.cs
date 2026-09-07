@@ -6,8 +6,8 @@ using System.Text;
 
 namespace ECommerce.Contract.Mappings
 {
-    public interface IUserMapper
+    public interface ICategoryMapper
     {
-        User ToEntity(RegisterDTO dto);
+        void UpdateCategory(Category category, GenericUploadedFileDTO file);
     }
 }

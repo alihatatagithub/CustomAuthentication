@@ -1,8 +1,10 @@
 ﻿using ECommerce.Contract;
 using ECommerce.Contract.Mappings;
+using ECommerce.Contract.MediaService;
 using ECommerce.Contract.Repositories;
 using ECommerce.Ground;
 using ECommerce.Presistance.Common.Mappings;
+using ECommerce.Presistance.MediaService;
 using ECommerce.Presistance.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -44,6 +46,11 @@ namespace ECommerce.Presistance.DependencyResolution
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddAutoMapper(cfg => { }, typeof(MappingProfile).Assembly);
             services.AddScoped<IUserMapper, UserMapper>();
+            services.AddScoped<IFileStorageService, LocalFileStorageService>();
+            services.AddScoped<IGenericMapper, GenericMapper>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IBrandRepository, BrandRepository>();
+            services.AddScoped<ICategoryMapper, CategoryMapper>();
         }
         public static void AddSerilog(this WebApplicationBuilder builder)
         {

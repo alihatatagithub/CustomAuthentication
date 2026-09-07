@@ -45,6 +45,10 @@ namespace ECommerce.Presistance.Repositories
         {
             return AppDbContext.Set<T>().FirstOrDefaultAsync(predicate);
         }
+        public Task<List<T>> GetAllAsync()
+        {
+            return AppDbContext.Set<T>().ToListAsync();
+        }
         public void Attach(T t) => AppDbContext.Set<T>().Attach(t);
     }
 }

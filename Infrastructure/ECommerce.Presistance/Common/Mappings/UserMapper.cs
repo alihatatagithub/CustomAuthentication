@@ -8,7 +8,7 @@ using System.Text;
 
 namespace ECommerce.Presistance.Common.Mappings
 {
-    public class UserMapper : IUserMapper
+    public class UserMapper : Profile, IUserMapper
     {
         private readonly IMapper _mapper;
 
@@ -19,6 +19,9 @@ namespace ECommerce.Presistance.Common.Mappings
 
         public User ToEntity(RegisterDTO dto)
         {
+            CreateMap<RegisterDTO, User>()
+                .ForMember(dest => dest.PasswordHash, opt => opt.Ignore());
+
             return _mapper.Map<User>(dto);
         }
 
