@@ -18,7 +18,7 @@ namespace ECommerce.Api.Controllers
         }
 
         [HttpGet("list")]
-        public async Task<IActionResult> CategoryList([FromQuery] BrandListFilterDTO model)
+        public async Task<IActionResult> BrandList([FromQuery] BrandListFilterDTO model)
         {
             var result = await _brandService.BrandList(model);
             return GetApiResponse(result, model.Page.Value, model.PageSize.Value);

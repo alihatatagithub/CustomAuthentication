@@ -3,6 +3,7 @@ using ECommerce.Contract.Mappings;
 using ECommerce.Contract.Services;
 using ECommerce.Data;
 using ECommerce.Data.DTO;
+using ECommerce.Data.Entities;
 using ECommerce.Ground;
 
 namespace ECommerce.Service
@@ -11,14 +12,16 @@ namespace ECommerce.Service
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IUserMapper _mapper;
+        private readonly IGenericMapper _genericMapper;
         private readonly IPasswordHasher _passwordHasher;
         private readonly IJwtToken _jwtToken;
-        public AuthService(IUnitOfWork unitOfWork, IUserMapper mapper, IPasswordHasher passwordHasher, IJwtToken jwtToken)
+        public AuthService(IUnitOfWork unitOfWork, IUserMapper mapper, IPasswordHasher passwordHasher, IJwtToken jwtToken, IGenericMapper genericMapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             _passwordHasher = passwordHasher;
             _jwtToken = jwtToken;
+            _genericMapper = genericMapper;
         }
         public async Task<Response<SuccessDTO>> Logout(Guid userId,LogoutDTO model)
         {
@@ -42,13 +45,16 @@ namespace ECommerce.Service
         public async Task<Response<AuthResponseDTO>> Register(RegisterDTO model)
         {
             var hashedPassword = _passwordHasher.Hash(model.Password);
-            var user = _mapper.ToEntity(model);
+            var user = _genericMapper.Map<User,RegisterDTO>(model);
             user.PasswordHash = hashedPassword;
 
-            SystemRoles role = model.LoginRole == LoginRole.Vendor ? SystemRoles.Vendor : SystemRoles.Customer;
-            var accessToken = _jwtToken.GenerateAccessToken(user, new List<string> { role.ToString() });
+            SystemRoles systemRole = model.LoginRole == LoginRole.Vendor ? SystemRoles.Vendor : SystemRoles.Customer;
+            var role = await _unitOfWork.RoleRepository.FindOne(a => a.Name == systemRole.ToString());
+
+            var accessToken = _jwtToken.GenerateAccessToken(user, new List<string> { systemRole.ToString() });
             var refreshToken = _jwtToken.GenerateRefreshToken();
             user.RefreshToken = refreshToken;
+            user.UserRoles = new List<UserRole> { new UserRole() { UserId = user.Id, RoleId = role.Id } };
             await _unitOfWork.UserRepository.Create(user);
             await _unitOfWork.SaveChangesAsync();
             return new Response<AuthResponseDTO>

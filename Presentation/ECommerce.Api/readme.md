@@ -1,0 +1,1 @@
+﻿Add-Migration MigrationName -Context AppDbContext -Startup Presentation\ECommerce.Api -Project Infrastructure\ECommerce.Presistance

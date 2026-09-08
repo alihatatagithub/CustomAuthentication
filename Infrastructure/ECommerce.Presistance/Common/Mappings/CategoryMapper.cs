@@ -8,7 +8,7 @@ using System.Text;
 
 namespace ECommerce.Presistance.Common.Mappings
 {
-    public class CategoryMapper : Profile, ICategoryMapper
+    public class CategoryMapper : /*Profile, */ICategoryMapper
     {
         private readonly IMapper _mapper;
 
@@ -26,6 +26,27 @@ namespace ECommerce.Presistance.Common.Mappings
             category.ImageUrl = file.FilePath;
             category.Id = file.MediaId;
 
+        }
+        public Category MapCategory(CreateCategoryDTO model)
+        {
+            return new Category
+            {
+                Name = model.Name,
+                Description = model.Description,
+                ParentCategoryId = model.ParentCategoryId,
+
+            };
+        }
+        public CategoryListDTO MapCategoryListDTO(Category category)
+        {
+            return new CategoryListDTO
+            {
+                Id = category.Id,
+                Name = category.Name,
+                Description = category.Description,
+                ImageUrl = category.ImageUrl,
+
+            };
         }
     }
 }

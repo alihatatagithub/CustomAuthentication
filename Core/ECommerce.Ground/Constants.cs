@@ -13,5 +13,12 @@ namespace ECommerce.Ground
             public const string UploadsFolderName = "Uploads";
             public const string CategoryFolder = "Category";
         }
+        public static class SystemRoleConstants
+        {
+            public const string Admin = "Admin";
+            public const string Vendor = "Vendor";
+            public const string Customer = "Customer";
+
+        }
     }
 }

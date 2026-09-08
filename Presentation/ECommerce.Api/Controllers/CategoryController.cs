@@ -1,6 +1,9 @@
-﻿using ECommerce.Api.Controllers.Base;
+﻿using ECommerce.Api.Attributes;
+using ECommerce.Api.Controllers.Base;
 using ECommerce.Contract.Services;
 using ECommerce.Data.DTO;
+using ECommerce.Ground;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.Api.Controllers
@@ -16,7 +19,8 @@ namespace ECommerce.Api.Controllers
             _categoryService = categoryService;
         }
         [HttpPost("create")]
-        public async Task<IActionResult> Create(CreateCategoryDTO model)
+        [Authorize(Roles = "Admin,Vendor")]
+        public async Task<IActionResult> Create([FromForm] CreateCategoryDTO model)
         {
             var result = await _categoryService.CreateCategory(model);
             return GetApiResponse(result);

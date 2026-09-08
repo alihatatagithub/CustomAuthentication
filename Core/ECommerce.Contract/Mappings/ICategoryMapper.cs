@@ -8,6 +8,8 @@ namespace ECommerce.Contract.Mappings
 {
     public interface ICategoryMapper
     {
+        Category MapCategory(CreateCategoryDTO model);
+        CategoryListDTO MapCategoryListDTO(Category category);
         void UpdateCategory(Category category, GenericUploadedFileDTO file);
     }
 }

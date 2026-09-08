@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ECommerce.Contract.Repositories
+﻿namespace ECommerce.Contract.Repositories
 {
     public interface IRepository<T> where T : class
     {

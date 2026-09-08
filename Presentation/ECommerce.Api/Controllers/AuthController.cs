@@ -1,4 +1,5 @@
-﻿using ECommerce.Api.Controllers.Base;
+﻿using ECommerce.Api.Attributes;
+using ECommerce.Api.Controllers.Base;
 using ECommerce.Contract.Services;
 using ECommerce.Data.DTO;
 using ECommerce.Ground;
@@ -37,7 +38,7 @@ namespace ECommerce.Api.Controllers
             return GetApiResponse(result);
         }
         [HttpGet("user-details")]
-        [Authorize]
+        [CustomAuthorize(SystemRoles.Admin, SystemRoles.Customer, SystemRoles.Vendor)]
         public async Task<IActionResult> GetUserDetails()
         {
             var userId = User.GetUserId();
@@ -50,7 +51,7 @@ namespace ECommerce.Api.Controllers
             return Ok(result);
         }
         [HttpPost("logout")]
-        [Authorize]
+        [CustomAuthorize(SystemRoles.Admin, SystemRoles.Customer, SystemRoles.Vendor)]
         public async Task<IActionResult> Logout([FromBody] LogoutDTO model)
         {
             var result = await _auth.Logout(User.GetUserId(), model);

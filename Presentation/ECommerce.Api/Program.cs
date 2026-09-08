@@ -1,6 +1,9 @@
+using ECommerce.Contract;
 using ECommerce.Ground;
+using ECommerce.Presistance;
 using ECommerce.Presistance.DependencyResolution;
 using ECommerce.Service.DependencyResolution;
+using Microsoft.OpenApi;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,7 +32,24 @@ builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Enter your JWT token"
+    });
+
+    options.AddSecurityRequirement(document =>
+        new OpenApiSecurityRequirement
+        {
+            [new OpenApiSecuritySchemeReference("Bearer", document)] = []
+        });
+});
 builder.Services.AddOpenApi();
 
 builder.Services.AddPostgresDbContext();
@@ -39,6 +59,22 @@ builder.AddSerilog();
 builder.Services.AddCoreService();
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider
+        .GetRequiredService<AppDbContext>();
+
+    var jwtToken = scope.ServiceProvider
+    .GetRequiredService<IJwtToken>();
+
+    var passwordHasher = scope.ServiceProvider
+    .GetRequiredService<IPasswordHasher>();
+
+    //await context.Database.MigrateAsync();
+
+    await AppDbContextSeed.SeedAsync(context, jwtToken, passwordHasher);
+}
 
 var supportedCultures = new[] { "en", "ar" };
 var localizationOptions = new RequestLocalizationOptions()
