@@ -44,6 +44,7 @@ namespace ECommerce.Presistance.DependencyResolution
             services.AddScoped<IPasswordHasher, PasswordHasher>();
             services.AddScoped<IJwtToken, JwtToken>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddAutoMapper(cfg => { }, typeof(MappingProfile).Assembly);
             services.AddScoped<IUserMapper, UserMapper>();
             services.AddScoped<IFileStorageService, LocalFileStorageService>();

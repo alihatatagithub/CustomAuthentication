@@ -27,7 +27,7 @@ namespace ECommerce.Service
 
         public async Task<Response<SuccessDTO>> CreateCategory(CreateCategoryDTO model)
         {
-            var category = _genericMapper.Map<Category,CreateCategoryDTO>(model);
+            var category = _mapper.MapCategory(model);
 
             if (model.File != null)
             {
@@ -60,7 +60,7 @@ namespace ECommerce.Service
         }
         private CategoryListDTO BuildTree(Category rootCategory, List<Category> allCategories)
         {
-            var dto = _genericMapper.Map<CategoryListDTO,Category>(rootCategory);
+            var dto = _mapper.MapCategoryListDTO(rootCategory);
 
             var children = allCategories
                 .Where(x => x.ParentCategoryId == rootCategory.Id)

@@ -22,10 +22,12 @@ namespace ECommerce.Presistance.MediaService
                 Guid mediaId = Guid.NewGuid();
                 var uploadsFolder = Path.Combine(_environment.ContentRootPath, Constants.Media.UploadsFolderName, folderName, mediaId.ToString());
 
-                if (Directory.Exists(uploadsFolder))
+                if (!Directory.Exists(uploadsFolder))
                     Directory.CreateDirectory(uploadsFolder);
 
-                using (FileStream fileStream = File.Create(uploadsFolder))
+                var filePath = Path.Combine(uploadsFolder,file.FileName);
+
+                using (FileStream fileStream = File.Create(filePath))
                 {
                     await file.CopyToAsync(fileStream);
                 }

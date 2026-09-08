@@ -9,6 +9,7 @@ namespace ECommerce.Contract
     public interface IUnitOfWork
     {
         IUserRepository UserRepository { get; }
+        IRoleRepository RoleRepository { get; }
         ICategoryRepository CategoryRepository { get; }
         IBrandRepository BrandRepository { get; }
         Task SaveChangesAsync();

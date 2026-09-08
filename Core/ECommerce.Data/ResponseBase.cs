@@ -30,6 +30,10 @@ namespace ECommerce.Data
     }
     public class SuccessDTO
     {
+        public SuccessDTO()
+        {
+            IsSuccess = true;
+        }
         public bool IsSuccess { get; set; }
     }
 }

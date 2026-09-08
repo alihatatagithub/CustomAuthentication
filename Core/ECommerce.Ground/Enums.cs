@@ -13,6 +13,6 @@ namespace ECommerce.Ground
     public enum LoginRole
     {
         Customer = 0,
-        Vendor = 2,
+        Vendor = 1,
     }
 }
