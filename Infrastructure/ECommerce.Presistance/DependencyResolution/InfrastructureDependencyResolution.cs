@@ -51,7 +51,9 @@ namespace ECommerce.Presistance.DependencyResolution
             services.AddScoped<IGenericMapper, GenericMapper>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IBrandRepository, BrandRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICategoryMapper, CategoryMapper>();
+            services.AddScoped<IProductMapper, ProductMapper>();
         }
         public static void AddSerilog(this WebApplicationBuilder builder)
         {

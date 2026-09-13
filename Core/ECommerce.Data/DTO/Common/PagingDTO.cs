@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ECommerce.Data.DTO.Common
 {
-    public class DTOPaging
+    public class PagingDTO
     {
         [DefaultValue(Constants.DefaultPage)]
         public int? Page { get; set; } = Constants.DefaultPage;

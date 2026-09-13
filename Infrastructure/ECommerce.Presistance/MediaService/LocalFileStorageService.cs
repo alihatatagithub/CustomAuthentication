@@ -1,15 +1,15 @@
 ﻿using ECommerce.Contract.MediaService;
 using ECommerce.Data.DTO;
 using ECommerce.Ground;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Hosting;
 
 namespace ECommerce.Presistance.MediaService
 {
     public class LocalFileStorageService : IFileStorageService
     {
-        private readonly IHostEnvironment _environment;
-        public LocalFileStorageService(IHostEnvironment environment)
+        private readonly IWebHostEnvironment _environment;
+        public LocalFileStorageService(IWebHostEnvironment environment)
         {
             _environment = environment;
         }
@@ -20,18 +20,19 @@ namespace ECommerce.Presistance.MediaService
             foreach (var file in files)
             {
                 Guid mediaId = Guid.NewGuid();
-                var uploadsFolder = Path.Combine(_environment.ContentRootPath, Constants.Media.UploadsFolderName, folderName, mediaId.ToString());
+                var filePath = Path.Combine(Constants.Media.UploadsFolderName, folderName, mediaId.ToString());
+                var uploadsFolder = Path.Combine(_environment.WebRootPath, filePath);
 
                 if (!Directory.Exists(uploadsFolder))
                     Directory.CreateDirectory(uploadsFolder);
 
-                var filePath = Path.Combine(uploadsFolder,file.FileName);
+                var serverFilePath = Path.Combine(uploadsFolder,file.FileName);
 
-                using (FileStream fileStream = File.Create(filePath))
+                using (FileStream fileStream = File.Create(serverFilePath))
                 {
                     await file.CopyToAsync(fileStream);
                 }
-                uploads.Add(new GenericUploadedFileDTO { MediaId = mediaId, FilePath = Path.Combine(uploadsFolder, file.FileName) });
+                uploads.Add(new GenericUploadedFileDTO { MediaId = mediaId, FilePath = Path.Combine(filePath, file.FileName) });
             }
             return uploads;
         }

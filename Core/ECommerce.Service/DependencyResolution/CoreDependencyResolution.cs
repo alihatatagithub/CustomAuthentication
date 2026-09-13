@@ -10,6 +10,7 @@ namespace ECommerce.Service.DependencyResolution
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IBrandService, BrandService>();
+            services.AddScoped<IProductService, ProductService>();
         }
     }
 }
