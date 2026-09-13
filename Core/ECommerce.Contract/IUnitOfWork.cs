@@ -12,6 +12,7 @@ namespace ECommerce.Contract
         IRoleRepository RoleRepository { get; }
         ICategoryRepository CategoryRepository { get; }
         IBrandRepository BrandRepository { get; }
+        IProductRepository ProductRepository { get; }
         Task SaveChangesAsync();
     }
 }
