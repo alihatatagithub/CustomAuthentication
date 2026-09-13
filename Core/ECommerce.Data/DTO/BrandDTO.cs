@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ECommerce.Data.DTO
 {
-    public class BrandListFilterDTO : DTOPaging
+    public class BrandListFilterDTO : PagingDTO
     {
         public string Name { get; set; }
     }

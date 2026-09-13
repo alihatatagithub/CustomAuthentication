@@ -91,7 +91,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
     app.MapOpenApi();
 }
-
+app.UseStaticFiles();
 app.UseHttpsRedirection();
 
  app.UseCors("AllowAngular"); // Commented out to trigger CORS error for testing/demonstration
